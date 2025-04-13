@@ -1,0 +1,45 @@
+{
+  "name" : "HR - Backup - Jobs",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::884977618773:role/AWSGlueServiceRole-CallAurora",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-884977618773-us-east-1/scripts/HR - Backup - Jobs.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-884977618773-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-884977618773-us-east-1/temporary/",
+    "--enable-auto-scaling" : "true"
+  },
+  "connections" : {
+    "connections" : [ "Postgresql connection" ]
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 2,
+  "timeout" : 480,
+  "maxCapacity" : 2.0,
+  "glueVersion" : "4.0",
+  "numberOfWorkers" : 2,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1744452927445\":{\"PostgreSQLCatalogSource\":{\"Database\":\"human_resources\",\"Name\":\"PostgreSQL\",\"Table\":\"hr_public_human_resources_jobs\"}},\"node-1744453087186\":{\"S3DirectTarget\":{\"AutoDataQuality\":{\"EvaluationContext\":\"EvaluateDataQuality_node1744452828862\",\"IsEnabled\":true},\"Compression\":\"none\",\"Format\":\"avro\",\"Inputs\":[\"node-1744452927445\"],\"Name\":\"Amazon S3\",\"PartitionKeys\":[],\"Path\":\"s3://luigi-castillo-chavez/human-resources/backup/jobs/\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "human-resources-backup-glue-jobs",
+    "branch" : "develop",
+    "folder" : "HR - Backup - Jobs"
+  }
+}
